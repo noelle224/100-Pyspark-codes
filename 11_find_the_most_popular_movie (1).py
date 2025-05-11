@@ -40,8 +40,27 @@ class Solution:
     df = df.orderBy('count', ascending=False)
     return df
 
+   def movienames(self):
+    from pyspark.sql.types import StructType, StructField, StringType, IntegerType
+    schema = StructType([
+        StructField("movieId", IntegerType(), True),
+        StructField("title", StringType(), True)
+    ])
+    data = [
+        [101,'The Matrix'],
+        [205,'Fight Club'],
+        [310,'The Godfather'],
+        [420,'Pulp Fiction'],
+        [530,'Schindlers List']  
+    ]
+
+    movies_df = spark.createDataFrame(data, schema=schema)
+    return movies_df
+
 Ind_obj = Solution()
 df = Ind_obj.readcsv()
 df = Ind_obj.interpret(df)
 df = Ind_obj.mostpopular(df)
+movies_df = Ind_obj.movienames()
+df = df.join(movies_df, on='movieId', how='inner')
 df.show()
