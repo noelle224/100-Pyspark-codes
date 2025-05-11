@@ -10,7 +10,7 @@ Original file is located at
 from pyspark.sql import SparkSession
 spark = SparkSession.builder.appName('Hashtags from words').getOrCreate()
 
-"""Given a text file, with the german words and their meaning. Read that into a dataframe and write that in a parquet file.
+"""Given a text file, extract the words from the hashtags file.
 
 
 """
